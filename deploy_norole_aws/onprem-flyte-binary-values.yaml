@@ -1,0 +1,47 @@
+configuration:
+  database:
+    username: flyte
+    host: postgres.flyte.svc.cluster.local
+    dbname: flyte
+  storage:
+    type: s3
+    metadataContainer: "{bucket_name}"
+    userDataContainer: "{bucket_name}"
+    provider: s3
+    providerConfig:
+      s3:
+        authType: "accesskey"
+        endpoint: "https://s3.eu-north-1.amazonaws.com"
+        region: "eu-north-1"
+        accessKey: "{AWS_Access_KEY_ID}"
+        secretKey: "{AWS_Secret_access_key}"
+        disableSSL: "false"
+        secure: "true"
+        v2Signing: "false"
+
+  inlineSecretRef: flyte-binary-inline-config-secret
+  inline:
+    plugins:
+      k8s:
+        inject-finalizer: true
+        default-env-vars:
+          - FLYTE_AWS_ENDPOINT: "https://s3.eu-north-1.amazonaws.com"
+          - FLYTE_AWS_REGION: "eu-north-1"
+          - FLYTE_AWS_ACCESS_KEY_ID: "{AWS_Access_KEY_ID}"
+          - FLYTE_AWS_SECRET_ACCESS_KEY: "{AWS_Secret_access_key}"
+
+    task_resources:
+      defaults:
+        cpu: 100m
+        memory: 500Mi #change default requested resources and limits to fit your needs
+      limits:
+        memory: 2Gi
+
+rbac:
+  create: false
+
+serviceAccount:
+  create: true
+
+minio:
+  enabled: false

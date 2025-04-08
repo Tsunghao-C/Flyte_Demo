@@ -43,3 +43,6 @@ use `uv` to create venv locally
 - Clean up (local machine)
 ```flytectl demo teardown```
 ```docker system prune -a --volumes```
+
+If we use ```flytectl demo start```, there will be a Postgres volume stored in ```flyte-sandbox``` to keep data persistent.
+To remove it deeply, do ```flytectl demo teardown --cleanup```, or manually do ```docker volume rm flyte-sandbox```

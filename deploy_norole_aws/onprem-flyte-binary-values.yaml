@@ -1,7 +1,7 @@
 configuration:
   database:
     username: flyte
-    host: postgres.flyte.svc.cluster.local
+    host: postgres.existingns.svc.cluster.local # the namespace need to change accordingly if still using local Postgres
     dbname: flyte
   storage:
     type: s3
@@ -41,7 +41,5 @@ rbac:
   create: false
 
 serviceAccount:
-  create: true
-
-minio:
-  enabled: false
+  create: false
+  # name: if not specified, the "default" serviceAccount will be used to run flyte 

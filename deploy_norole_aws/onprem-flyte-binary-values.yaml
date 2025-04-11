@@ -21,6 +21,17 @@ configuration:
 
   inlineSecretRef: flyte-binary-inline-config-secret
   inline:
+    namespace_mapping:
+      template: existingns # mapping task pods to delpoy in existing ns
+    autoIpAllocation: false
+    domains:
+      - id: development
+      - id: staging
+      - id: production
+    propeller:
+      createProjectNamespace: false
+      workflowNamespaceMapping:
+        flytesnacks: existingns
     plugins:
       k8s:
         inject-finalizer: true
